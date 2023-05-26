@@ -1,0 +1,9 @@
+---
+- name: task role
+  hosts: sales
+  connection: ssh
+  become: yes
+  user: ansible
+  roles: 
+    - techserver
+

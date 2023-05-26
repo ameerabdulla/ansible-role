@@ -1,0 +1,21 @@
+---
+  - name: update yum
+    yum: name=yum state=latest
+  - name: install httpd
+    yum: name=httpd state=latest
+
+  - name: make dir
+    file: path={{ doc_root }} state=directory
+
+  - name: copy index.html
+    copy: src=index.html dest={{ doc_root }}/index.html
+  - name: copy http config
+    copy: src=/etc/httpd/conf/httpd.conf dest=/home/ansible
+
+  - name: delt conf file
+    shell: "rm -rvf /etc/httpd/conf/httpd.conf"
+
+  - name: paste conf file
+    template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+    notify: 
+      - start httpd
